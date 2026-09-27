@@ -1,0 +1,676 @@
+# Castlevania: Harmony of Dissonance (USA) — cart recompile config.
+# Merged from runtime miss proposals (human review). ROM identity is load-bearing.
+
+[program]
+name         = "Castlevania Harmony of Dissonance (USA)"
+id           = "hod_usa"
+load_address = 0x08000000
+size         = 0x00800000
+entry_pc     = 0x080000C0
+static_resume_all = true
+
+[identity]
+sha1 = "b90da0d9be0b3a0893cd9e2c399056bcf9579e21"
+crc32 = "88C1B562"
+
+# ── High-frequency runtime misses (from recomp_master_misses_ACHE) ──
+
+[[extra_func]]
+addr = 0x08000000
+mode = "arm"
+name = "cart_reset_stub"
+note = "header/entry region; bridged as miss"
+
+[[extra_func]]
+addr = 0x08001528
+mode = "thumb"
+name = "tfunc_08001528"
+note = "push {r4-r7,lr} prologue; epilogue pops via r1 (0x15B8)"
+
+[[extra_func]]
+addr = 0x080015BC
+mode = "thumb"
+name = "tfunc_080015BC"
+note = "push {r4,lr} prologue following prior epilogue"
+
+[[extra_func]]
+addr = 0x08004C3C
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x08004C88
+mode = "thumb"
+note = "bridged x263"
+
+[[extra_func]]
+addr = 0x08010628
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x08013130
+mode = "thumb"
+note = "bridged x4337"
+
+[[extra_func]]
+addr = 0x08013B1C
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x08013F10
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x080BB6A4
+mode = "thumb"
+note = "bridged x3920"
+
+[[extra_func]]
+addr = 0x080BB6AC
+mode = "thumb"
+note = "bridged x3920"
+
+[[extra_func]]
+addr = 0x080BBA18
+mode = "thumb"
+note = "jump-table candidate [0x080BBA18,0x080BBA50]"
+
+[[extra_func]]
+addr = 0x080BBA30
+mode = "thumb"
+note = "bridged x661"
+
+[[extra_func]]
+addr = 0x080BBA50
+mode = "thumb"
+note = "jump-table candidate"
+
+[[extra_func]]
+addr = 0x080BBAD8
+mode = "thumb"
+note = "jump-table candidate [0x080BBAD8,0x080BBC1E]"
+
+[[extra_func]]
+addr = 0x080BBAE0
+mode = "thumb"
+note = "bridged x23"
+
+[[extra_func]]
+addr = 0x080BBAFC
+mode = "thumb"
+note = "bridged x40"
+
+[[extra_func]]
+addr = 0x080BBB4C
+mode = "thumb"
+note = "bridged x8"
+
+[[extra_func]]
+addr = 0x080BBB52
+mode = "thumb"
+note = "bridged x8"
+
+[[extra_func]]
+addr = 0x080BBB60
+mode = "thumb"
+note = "bridged x16"
+
+[[extra_func]]
+addr = 0x080BBB66
+mode = "thumb"
+note = "bridged x16"
+
+[[extra_func]]
+addr = 0x080BBB74
+mode = "thumb"
+note = "bridged x22"
+
+[[extra_func]]
+addr = 0x080BBB8E
+mode = "thumb"
+note = "bridged x22"
+
+[[extra_func]]
+addr = 0x080BBB96
+mode = "thumb"
+note = "bridged x22"
+
+[[extra_func]]
+addr = 0x080BBB9E
+mode = "thumb"
+note = "bridged x22"
+
+[[extra_func]]
+addr = 0x080BBBA4
+mode = "thumb"
+note = "bridged x124"
+
+[[extra_func]]
+addr = 0x080BBBAA
+mode = "thumb"
+note = "bridged x124"
+
+[[extra_func]]
+addr = 0x080BBBB8
+mode = "thumb"
+note = "bridged x16"
+
+[[extra_func]]
+addr = 0x080BBBBE
+mode = "thumb"
+note = "bridged x16"
+
+[[extra_func]]
+addr = 0x080BBBF4
+mode = "thumb"
+note = "bridged x5"
+
+[[extra_func]]
+addr = 0x080BBBFA
+mode = "thumb"
+note = "bridged x5"
+
+[[extra_func]]
+addr = 0x080BBC00
+mode = "thumb"
+note = "bridged x5"
+
+[[extra_func]]
+addr = 0x080BBC06
+mode = "thumb"
+note = "bridged x5"
+
+[[extra_func]]
+addr = 0x080BBC18
+mode = "thumb"
+note = "bridged x10"
+
+[[extra_func]]
+addr = 0x080BBC1E
+mode = "thumb"
+note = "bridged x10"
+
+[[extra_func]]
+addr = 0x080BC31C
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x080BC918
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x080BCAAE
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x080BD7E0
+mode = "thumb"
+note = "bridged x1"
+
+[[extra_func]]
+addr = 0x080BD7E8
+mode = "thumb"
+note = "bridged x1"
+
+# IWRAM-installed code (runtime addresses, not ROM bytes).
+# These cannot be static-recompiled from the cartridge image; they stay
+# on the self-heal / interpreter path unless a [[code_copy]] is identified.
+# Documented so the miss report is honest.
+
+
+# HoD uses a Flash save chip (not SRAM like Circle of the Moon).
+
+[bios]
+path = "gba_bios.bin"
+sha1 = "300c20df6731a33952ded8c436f7f186d25d3492"
+
+[save]
+type = "flash512"
+
+# IWRAM code installs (from loader table 0x0800EBF4)
+# size field is 0x0400xxxx: high half flags, low half byte length.
+[[code_copy]]
+runtime_start = 0x030043A0
+source_start  = 0x08016CF0
+size          = 0x00000400
+name          = "iwram_43A0"
+note          = "loader table 0x0800EBF4; ARM blob"
+
+[[code_copy]]
+runtime_start = 0x030047A0
+source_start  = 0x08016FF4
+size          = 0x00000500
+name          = "iwram_47A0"
+note          = "loader table 0x0800EC00; ARM blob"
+
+# IWRAM relocated entries (need extra_func + code_copy)
+[[extra_func]]
+addr = 0x030043A0
+mode = "arm"
+source_addr = 0x08016CF0
+name = "iwram_func_43A0"
+
+[[extra_func]]
+addr = 0x030047A0
+mode = "arm"
+source_addr = 0x08016FF4
+name = "iwram_func_47A0"
+
+[[extra_func]]
+addr = 0x03002788
+mode = "thumb"
+source_addr = 0x080BB6E8
+name = "iwram_func_2788"
+
+[[extra_func]]
+addr = 0x03002630
+mode = "thumb"
+source_addr = 0x080BD7BC
+name = "iwram_func_2630"
+
+[[extra_func]]
+addr = 0x03002590
+mode = "thumb"
+source_addr = 0x080BD848
+name = "iwram_func_2590"
+
+[[extra_func]]
+addr = 0x03003B90
+mode = "arm"
+name = "iwram_func_3B90"
+
+[[extra_func]]
+addr = 0x03004DA0
+mode = "arm"
+name = "iwram_func_4DA0"
+
+
+[[resume_range]]
+start = 0x030043A0
+end   = 0x030044A0
+mode  = "arm"
+note  = "within code_copy iwram_43A0"
+
+[[resume_range]]
+start = 0x030047A0
+end   = 0x03004920
+mode  = "arm"
+note  = "within code_copy iwram_47A0"
+
+# Thumb IWRAM installs (from tables near 0x080BC2E8 / 0x080BD860)
+[[code_copy]]
+runtime_start = 0x03002788
+source_start  = 0x080BB6E8
+size          = 0x00000200
+name          = "iwram_2788"
+
+[[code_copy]]
+runtime_start = 0x03002590
+source_start  = 0x080BD848
+size          = 0x00000100
+name          = "iwram_2590"
+
+[[code_copy]]
+runtime_start = 0x03002630
+source_start  = 0x080BD7BC
+size          = 0x00000100
+name          = "iwram_2630"
+
+[[resume_range]]
+start = 0x03002788
+end   = 0x03002988
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x03002590
+end   = 0x03002690
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x03002630
+end   = 0x03002730
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x030043A0
+end   = 0x030045A0
+mode  = "arm"
+
+[[resume_range]]
+start = 0x030047A0
+end   = 0x03004A20
+mode  = "arm"
+
+# High-frequency ROM misses after IWRAM expand
+[[extra_func]]
+addr = 0x08024080
+mode = "thumb"
+note = "bridged x7184"
+
+[[extra_func]]
+addr = 0x080241DC
+mode = "thumb"
+note = "bridged x3592"
+
+[[extra_func]]
+addr = 0x0802450C
+mode = "thumb"
+note = "bridged x3592"
+
+[[extra_func]]
+addr = 0x0802CE2C
+mode = "thumb"
+note = "bridged x3592"
+
+[[extra_func]]
+addr = 0x0806C174
+mode = "thumb"
+note = "bridged x3592"
+
+[[extra_func]]
+addr = 0x0806C478
+mode = "thumb"
+note = "bridged x3592"
+
+[[resume_range]]
+start = 0x030043A0
+end   = 0x030047A0
+mode  = "arm"
+
+
+[[extra_func]]
+addr = 0x0802D198
+mode = "thumb"
+note = "bridged x3592"
+
+[[extra_func]]
+addr = 0x03004AEC
+mode = "arm"
+name = "iwram_func_4AEC"
+
+[[extra_func]]
+addr = 0x03004DA0
+mode = "arm"
+resume = true
+name = "iwram_resume_4DA0"
+
+[[extra_func]]
+addr = 0x03003B90
+mode = "arm"
+resume = true
+name = "iwram_resume_3B90"
+
+[[resume_range]]
+start = 0x0806C5A0
+end   = 0x0806D5A0
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0806D5A0
+end   = 0x0806E200
+mode  = "thumb"
+
+[[extra_func]]
+addr = 0x0806E720
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806E878
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806EE48
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x080BC30E
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x08077F10
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x080BB4DC
+mode = "thumb"
+
+[[resume_range]]
+start = 0x080BC2D0
+end   = 0x080BC400
+mode  = "thumb"
+
+[[code_copy]]
+runtime_start = 0x03003B90
+source_start  = 0x080000FC
+size          = 0x00000200
+name          = "iwram_3B90"
+note          = "loader table 0x0800089C; size 0x84000200 -> 0x200"
+
+[[resume_range]]
+start = 0x03003B90
+end   = 0x03003D90
+mode  = "arm"
+
+[[extra_func]]
+addr = 0x080BB550
+mode = "thumb"
+name = "tfunc_080BB550"
+
+[[extra_func]]
+addr = 0x080BB556
+mode = "thumb"
+resume = true
+name = "resume_080BB556"
+
+[[resume_range]]
+start = 0x080BB530
+end   = 0x080BB580
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08000380
+end   = 0x08000500
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08000480
+end   = 0x08000500
+mode  = "thumb"
+
+[[extra_func]]
+addr = 0x03004AEC
+mode = "arm"
+resume = true
+name = "iwram_resume_4AEC"
+
+[[extra_func]]
+addr = 0x03004C50
+mode = "arm"
+name = "iwram_func_4C50"
+
+
+
+[[code_copy]]
+runtime_start = 0x03004DA0
+source_start  = 0x0801754C
+size          = 0x00000080
+name          = "iwram_4DA0"
+note          = "table 0x08012984; size 0x04000080"
+
+[[resume_range]]
+start = 0x030047A0
+end   = 0x03004B00
+mode  = "arm"
+
+[[resume_range]]
+start = 0x03004DA0
+end   = 0x03004E20
+mode  = "arm"
+
+[[extra_func]]
+addr = 0x08024144
+mode = "thumb"
+resume = true
+
+[[extra_func]]
+addr = 0x0802CFE4
+mode = "thumb"
+resume = true
+
+[[resume_range]]
+start = 0x08024120
+end   = 0x08024160
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0802CFC0
+end   = 0x0802D010
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x03004B00
+end   = 0x03004CA0
+mode  = "arm"
+
+[[extra_func]]
+addr = 0x0802D0E0
+mode = "thumb"
+resume = true
+
+[[extra_func]]
+addr = 0x080244BC
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806BE28
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806E52C
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806F4C0
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806F7A4
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x08072E88
+mode = "thumb"
+
+[[resume_range]]
+start = 0x080244B0
+end   = 0x08024520
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0806BE20
+end   = 0x0806BE80
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0806E520
+end   = 0x0806E580
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0806F4B0
+end   = 0x0806F7C0
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08072E20
+end   = 0x08072F00
+mode  = "thumb"
+
+[[extra_func]]
+addr = 0x0808FDB6
+mode = "thumb"
+name = "tfunc_0808FDB6"
+
+[[resume_range]]
+start = 0x08095A70
+end   = 0x08095E70
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08095E70
+end   = 0x08096270
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08096270
+end   = 0x08096670
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08096670
+end   = 0x08096A70
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x08096A70
+end   = 0x08096E70
+mode  = "thumb"
+
+[[extra_func]]
+addr = 0x0801A858
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0806F9C0
+mode = "thumb"
+
+[[extra_func]]
+addr = 0x0801CF8C
+mode = "thumb"
+
+[[resume_range]]
+start = 0x080131B0
+end   = 0x08013220
+mode  = "thumb"
+
+[[resume_range]]
+start = 0x0801A850
+end   = 0x0801A8C0
+mode  = "thumb"
+
+[[extra_func]]
+addr = 0x0801D128
+mode = "thumb"
+resume = true
+
+[[extra_func]]
+addr = 0x0801D238
+mode = "thumb"
+resume = true
+
+[[extra_func]]
+addr = 0x0806FC18
+mode = "thumb"
+resume = true
+
+
+
+# Dual-mode aliases: fall-through dispatch may arrive with CPSR.T clear
+[[extra_func]]
+addr = 0x0801D128
+mode = "arm"
+
+[[extra_func]]
+addr = 0x0801D238
+mode = "arm"
+
+[[extra_func]]
+addr = 0x0806FC18
+mode = "arm"
+

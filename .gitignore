@@ -1,0 +1,72 @@
+# Build outputs
+build/
+bin/
+out/
+*.exe
+*.dll
+*.a
+*.lib
+*.o
+*.obj
+*.so
+*.dylib
+
+# ROM / BIOS / saves (never distribute)
+*.gba
+*.gbc
+*.gb
+*.rom
+*.bios
+*.sav
+*.srm
+*.fla
+*.eep
+gba_bios.bin
+open_gba_bios.bin
+GBA_bios.rom
+
+# Generated / recompile cache (regenerate with scripts/recompile.ps1)
+recomp/
+recomp_cache/
+recomp_master_misses*.toml.frag
+recomp_seed_proposals.toml
+
+# Logs, traces, dumps
+*.log
+*.jsonl
+*.bmp
+*.png
+*.txt
+!README.md
+!CMakeLists.txt
+!**/CMakeLists.txt
+docs/boot_*.png
+docs/play_*.png
+docs/scan_*.png
+docs/flash*.png
+docs/cmp_*.png
+docs/static_*.png
+docs/*_log*.txt
+_help_*.txt
+_build_help_*.txt
+
+# Tooling / third-party (install locally)
+third_party/
+gbarecomp-build/
+
+# IDE / OS
+.vscode/
+.vs/
+.idea/
+*.user
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Agent / private notes (keep on disk, never upload)
+AGENT_PROMPT.md
+docs/PROGRESS.md
+reference/
+*.bak
+*.tmp
+~*
