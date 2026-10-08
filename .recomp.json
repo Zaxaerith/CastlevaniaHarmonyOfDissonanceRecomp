@@ -1,0 +1,22 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "Castlevania: Harmony of Dissonance",
+  "system": "GBA",
+  "type": "recomp",
+  "project": "Castlevania: Harmony of Dissonance Recomp",
+  "status": "playable",
+  "targets": [
+    "Windows"
+  ],
+  "toolchain": "GBARecomp",
+  "original": {
+    "region": "USA",
+    "sha1": "b90da0d9be0b3a0893cd9e2c399056bcf9579e21"
+  },
+  "maintainers": [
+    {
+      "name": "Zaxaerith",
+      "link": "https://github.com/Zaxaerith"
+    }
+  ]
+}
